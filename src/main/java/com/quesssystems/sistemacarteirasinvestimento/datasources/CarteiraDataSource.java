@@ -1,0 +1,14 @@
+package com.quesssystems.sistemacarteirasinvestimento.datasources;
+
+import com.quesssystems.sistemacarteirasinvestimento.dtos.CarteiraDto;
+import com.quesssystems.sistemacarteirasinvestimento.dtos.CriarCarteiraDto;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface CarteiraDataSource {
+    CarteiraDto criarCarteira(CriarCarteiraDto criarCarteiraDto);
+    Optional<CarteiraDto> consultarCarteiraPorId(String id);
+    void removerCarteira(CarteiraDto carteiraDto);
+    List<CarteiraDto> consultarCarteirasPorUsuarioId(String usuarioId);
+}
