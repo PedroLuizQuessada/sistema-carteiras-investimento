@@ -1,6 +1,9 @@
 package com.quesssystems.sistemacarteirasinvestimento.controllers;
 
+import com.quesssystems.sistemacarteirasinvestimento.datasources.AcaoDataSource;
 import com.quesssystems.sistemacarteirasinvestimento.datasources.CarteiraDataSource;
+import com.quesssystems.sistemacarteirasinvestimento.datasources.MoedaDataSource;
+import com.quesssystems.sistemacarteirasinvestimento.datasources.UsuarioDataSource;
 import com.quesssystems.sistemacarteirasinvestimento.dtos.CriarCarteiraDto;
 import com.quesssystems.sistemacarteirasinvestimento.dtos.responses.AcaoDtoResponse;
 import com.quesssystems.sistemacarteirasinvestimento.dtos.responses.CarteiraDtoResponse;
@@ -8,7 +11,10 @@ import com.quesssystems.sistemacarteirasinvestimento.dtos.responses.MoedaDtoResp
 import com.quesssystems.sistemacarteirasinvestimento.entities.Acao;
 import com.quesssystems.sistemacarteirasinvestimento.entities.Carteira;
 import com.quesssystems.sistemacarteirasinvestimento.entities.Moeda;
+import com.quesssystems.sistemacarteirasinvestimento.gateways.AcaoGateway;
 import com.quesssystems.sistemacarteirasinvestimento.gateways.CarteiraGateway;
+import com.quesssystems.sistemacarteirasinvestimento.gateways.MoedaGateway;
+import com.quesssystems.sistemacarteirasinvestimento.gateways.UsuarioGateway;
 import com.quesssystems.sistemacarteirasinvestimento.presenters.AcaoPresenter;
 import com.quesssystems.sistemacarteirasinvestimento.presenters.CarteiraPresenter;
 import com.quesssystems.sistemacarteirasinvestimento.presenters.MoedaPresenter;
@@ -19,9 +25,18 @@ import java.util.List;
 public class CarteiraController {
 
     private final CarteiraDataSource carteiraDataSource;
+    private final UsuarioDataSource usuarioDataSource;
+    private final AcaoDataSource acaoDataSource;
+    private final MoedaDataSource moedaDataSource;
 
-    public CarteiraController(CarteiraDataSource carteiraDataSource) {
+    public CarteiraController(CarteiraDataSource carteiraDataSource,
+                              UsuarioDataSource usuarioDataSource,
+                              AcaoDataSource acaoDataSource,
+                              MoedaDataSource moedaDataSource) {
         this.carteiraDataSource = carteiraDataSource;
+        this.usuarioDataSource = usuarioDataSource;
+        this.acaoDataSource = acaoDataSource;
+        this.moedaDataSource = moedaDataSource;
     }
 
     public List<AcaoDtoResponse> consultarAcoesPorCarteiraId(String carteiraId) {
@@ -53,8 +68,11 @@ public class CarteiraController {
     }
 
     public CarteiraDtoResponse criarCarteira(CriarCarteiraDto criarCarteiraDto) {
-        CarteiraGateway gateway = new CarteiraGateway(this.carteiraDataSource);
-        CriarCarteiraUseCase useCase = new CriarCarteiraUseCase(gateway);
+        CarteiraGateway carteiraGateway = new CarteiraGateway(this.carteiraDataSource);
+        UsuarioGateway usuarioGateway = new UsuarioGateway(this.usuarioDataSource);
+        AcaoGateway acaoGateway = new AcaoGateway(this.acaoDataSource);
+        MoedaGateway moedaGateway = new MoedaGateway(this.moedaDataSource);
+        CriarCarteiraUseCase useCase = new CriarCarteiraUseCase(carteiraGateway, usuarioGateway, acaoGateway, moedaGateway);
         Carteira carteira = useCase.executar(criarCarteiraDto);
         return CarteiraPresenter.toResponse(carteira);
     }

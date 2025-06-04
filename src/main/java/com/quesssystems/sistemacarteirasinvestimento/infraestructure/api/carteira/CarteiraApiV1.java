@@ -1,7 +1,10 @@
 package com.quesssystems.sistemacarteirasinvestimento.infraestructure.api.carteira;
 
 import com.quesssystems.sistemacarteirasinvestimento.controllers.CarteiraController;
+import com.quesssystems.sistemacarteirasinvestimento.datasources.AcaoDataSource;
 import com.quesssystems.sistemacarteirasinvestimento.datasources.CarteiraDataSource;
+import com.quesssystems.sistemacarteirasinvestimento.datasources.MoedaDataSource;
+import com.quesssystems.sistemacarteirasinvestimento.datasources.UsuarioDataSource;
 import com.quesssystems.sistemacarteirasinvestimento.dtos.CriarCarteiraDto;
 import com.quesssystems.sistemacarteirasinvestimento.dtos.responses.AcaoDtoResponse;
 import com.quesssystems.sistemacarteirasinvestimento.dtos.responses.CarteiraDtoResponse;
@@ -22,8 +25,11 @@ public class CarteiraApiV1 {
 
     private final CarteiraController carteiraController;
 
-    public CarteiraApiV1(CarteiraDataSource carteiraDataSource) {
-        this.carteiraController = new CarteiraController(carteiraDataSource);
+    public CarteiraApiV1(CarteiraDataSource carteiraDataSource,
+                         UsuarioDataSource usuarioDataSource,
+                         AcaoDataSource acaoDataSource,
+                         MoedaDataSource moedaDataSource) {
+        this.carteiraController = new CarteiraController(carteiraDataSource, usuarioDataSource, acaoDataSource, moedaDataSource);
     }
 
     @GetMapping("/acoes/{carteira-id}")
