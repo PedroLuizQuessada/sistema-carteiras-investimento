@@ -58,7 +58,7 @@ public class Carteira {
         int numeroMaximoAcoesEstrangeiras = 3;
         int numeroAcoesEstrangeiras = 0;
         for (Acao acao : acaoList) {
-            if (!acao.getOrigem().equalsIgnoreCase("BR")) {
+            if (!acao.getOrigem().equalsIgnoreCase("BRA")) {
                 numeroAcoesEstrangeiras += 1;
             }
 
