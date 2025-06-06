@@ -1,7 +1,6 @@
 package com.quesssystems.sistemacarteirasinvestimento.infraestructure.persistence.jpa.mappers;
 
 import com.quesssystems.sistemacarteirasinvestimento.dtos.CarteiraDto;
-import com.quesssystems.sistemacarteirasinvestimento.dtos.CriarCarteiraDto;
 import com.quesssystems.sistemacarteirasinvestimento.infraestructure.persistence.jpa.model.CarteiraJpa;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,13 +18,6 @@ public class CarteiraDtoJpaMapper {
                 usuarioDtoJpaMapper.toUsuarioDto(carteiraJpa.getUsuario()),
                 carteiraJpa.getAcaoList().stream().map(acaoDtoJpaMapper::toAcaoDto).toList(),
                 carteiraJpa.getMoedaList().stream().map(moedaDtoJpaMapper::toMoedaDto).toList());
-    }
-
-    public CarteiraJpa toCarteiraJpa(CriarCarteiraDto criarCarteiraDto) {
-        return new CarteiraJpa(null,
-                usuarioDtoJpaMapper.toUsuarioJpa(criarCarteiraDto.usuarioDto()),
-                criarCarteiraDto.acaoDtoList().stream().map(acaoDtoJpaMapper::toAcaoJpa).toList(),
-                criarCarteiraDto.moedaDtoList().stream().map(moedaDtoJpaMapper::toMoedaJpa).toList());
     }
 
     public CarteiraJpa toCarteiraJpa(CarteiraDto carteiraDto) {

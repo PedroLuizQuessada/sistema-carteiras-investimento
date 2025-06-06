@@ -19,7 +19,7 @@ public class CarteiraGateway {
         this.carteiraDataSource = carteiraDataSource;
     }
 
-    public Carteira criarCarteira(CriarCarteiraDto criarCarteiraDto) {
+    public Carteira criarCarteira(CarteiraDto criarCarteiraDto) {
         CarteiraDto carteiraDto = carteiraDataSource.criarCarteira(criarCarteiraDto);
         return criarEntidade(carteiraDto);
     }

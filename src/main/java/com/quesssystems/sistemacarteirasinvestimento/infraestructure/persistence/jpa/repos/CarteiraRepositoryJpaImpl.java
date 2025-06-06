@@ -2,7 +2,6 @@ package com.quesssystems.sistemacarteirasinvestimento.infraestructure.persistenc
 
 import com.quesssystems.sistemacarteirasinvestimento.datasources.CarteiraDataSource;
 import com.quesssystems.sistemacarteirasinvestimento.dtos.CarteiraDto;
-import com.quesssystems.sistemacarteirasinvestimento.dtos.CriarCarteiraDto;
 import com.quesssystems.sistemacarteirasinvestimento.infraestructure.persistence.jpa.mappers.CarteiraDtoJpaMapper;
 import com.quesssystems.sistemacarteirasinvestimento.infraestructure.persistence.jpa.model.CarteiraJpa;
 import jakarta.persistence.EntityManager;
@@ -26,8 +25,8 @@ public class CarteiraRepositoryJpaImpl implements CarteiraDataSource {
 
     @Override
     @Transactional
-    public CarteiraDto criarCarteira(CriarCarteiraDto criarCarteiraDto) {
-        CarteiraJpa carteiraJpa = carteiraDtoJpaMapper.toCarteiraJpa(criarCarteiraDto);
+    public CarteiraDto criarCarteira(CarteiraDto carteiraDto) {
+        CarteiraJpa carteiraJpa = carteiraDtoJpaMapper.toCarteiraJpa(carteiraDto);
         carteiraJpa = entityManager.merge(carteiraJpa);
         return carteiraDtoJpaMapper.toCarteiraDto(carteiraJpa);
     }

@@ -4,7 +4,7 @@ import com.quesssystems.sistemacarteirasinvestimento.datasources.AcaoDataSource;
 import com.quesssystems.sistemacarteirasinvestimento.datasources.CarteiraDataSource;
 import com.quesssystems.sistemacarteirasinvestimento.datasources.MoedaDataSource;
 import com.quesssystems.sistemacarteirasinvestimento.datasources.UsuarioDataSource;
-import com.quesssystems.sistemacarteirasinvestimento.dtos.CriarCarteiraDto;
+import com.quesssystems.sistemacarteirasinvestimento.dtos.requests.CriarCarteiraDto;
 import com.quesssystems.sistemacarteirasinvestimento.dtos.responses.AcaoDtoResponse;
 import com.quesssystems.sistemacarteirasinvestimento.dtos.responses.CarteiraDtoResponse;
 import com.quesssystems.sistemacarteirasinvestimento.dtos.responses.MoedaDtoResponse;

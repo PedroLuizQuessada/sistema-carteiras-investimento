@@ -5,7 +5,7 @@ import com.quesssystems.sistemacarteirasinvestimento.datasources.AcaoDataSource;
 import com.quesssystems.sistemacarteirasinvestimento.datasources.CarteiraDataSource;
 import com.quesssystems.sistemacarteirasinvestimento.datasources.MoedaDataSource;
 import com.quesssystems.sistemacarteirasinvestimento.datasources.UsuarioDataSource;
-import com.quesssystems.sistemacarteirasinvestimento.dtos.CriarCarteiraDto;
+import com.quesssystems.sistemacarteirasinvestimento.dtos.requests.CriarCarteiraDto;
 import com.quesssystems.sistemacarteirasinvestimento.dtos.responses.AcaoDtoResponse;
 import com.quesssystems.sistemacarteirasinvestimento.dtos.responses.CarteiraDtoResponse;
 import com.quesssystems.sistemacarteirasinvestimento.dtos.responses.MoedaDtoResponse;
@@ -62,7 +62,7 @@ public class CarteiraApiV1 {
 
     @PostMapping
     ResponseEntity<CarteiraDtoResponse> criarCarteira(@RequestBody @Valid CriarCarteiraDto criarCarteiraDto) {
-        log.info("Criando carteira para usuário de ID: {}", criarCarteiraDto.usuarioDto().id());
+        log.info("Criando carteira para usuário de ID: {}", criarCarteiraDto.usuarioId());
         return ResponseEntity
                 .ok(carteiraController.criarCarteira(criarCarteiraDto));
     }
