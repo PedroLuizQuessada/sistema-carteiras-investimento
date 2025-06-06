@@ -3,8 +3,10 @@ package com.quesssystems.sistemacarteirasinvestimento.entities;
 import com.quesssystems.sistemacarteirasinvestimento.exceptions.NumeroAcoesEstrangeirasException;
 import com.quesssystems.sistemacarteirasinvestimento.exceptions.NumeroAcoesException;
 import com.quesssystems.sistemacarteirasinvestimento.exceptions.NumeroMoedasException;
+import com.quesssystems.sistemacarteirasinvestimento.exceptions.UsuarioCarteiraInvalidoException;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Carteira {
     private final String id;
@@ -13,6 +15,7 @@ public class Carteira {
     private final List<Moeda> moedaList;
 
     public Carteira(String id, Usuario usuario, List<Acao> acaoList, List<Moeda> moedaList) {
+        validarUsuario(usuario);
         validarNumeroAcoes(acaoList);
         validarNumeroAcoesEstrangeiras(acaoList);
         validarNumeroMoeda(moedaList);
@@ -37,6 +40,11 @@ public class Carteira {
 
     public List<Moeda> getMoedaList() {
         return moedaList;
+    }
+
+    private void validarUsuario(Usuario usuario) {
+        if (Objects.isNull(usuario) || Objects.isNull(usuario.getId()))
+            throw new UsuarioCarteiraInvalidoException();
     }
 
     private void validarNumeroAcoes(List<Acao> acaoList) {
