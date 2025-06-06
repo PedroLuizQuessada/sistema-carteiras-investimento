@@ -1,6 +1,6 @@
 package com.quesssystems.sistemacarteirasinvestimento.entities;
 
-import com.quesssystems.sistemacarteirasinvestimento.exceptions.NomeMoedaException;
+import com.quesssystems.sistemacarteirasinvestimento.exceptions.NomeMoedaInvalidoException;
 
 import java.util.Objects;
 
@@ -25,6 +25,6 @@ public class Moeda {
 
     private void validarNome(String nome) {
         if (Objects.isNull(nome))
-            throw new NomeMoedaException();
+            throw new NomeMoedaInvalidoException();
     }
 }

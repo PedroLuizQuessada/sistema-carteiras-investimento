@@ -1,12 +1,12 @@
 package com.quesssystems.sistemacarteirasinvestimento.exceptions;
 
-public class SenhaUsuarioException extends RuntimeException {
+public class SenhaUsuarioInvalidaException extends RuntimeException {
 
-    public SenhaUsuarioException() {
+    public SenhaUsuarioInvalidaException() {
         super("O usuário deve possuir uma senha");
     }
 
-    public SenhaUsuarioException(int numeroCaracteres) {
+    public SenhaUsuarioInvalidaException(int numeroCaracteres) {
         super(String.format("A senha deve possuir pelo menos %d caracteres", numeroCaracteres));
     }
 }

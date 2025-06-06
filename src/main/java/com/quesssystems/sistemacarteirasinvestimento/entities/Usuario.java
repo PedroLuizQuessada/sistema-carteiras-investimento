@@ -1,7 +1,7 @@
 package com.quesssystems.sistemacarteirasinvestimento.entities;
 
 import com.quesssystems.sistemacarteirasinvestimento.exceptions.EmailUsuarioInvalidoException;
-import com.quesssystems.sistemacarteirasinvestimento.exceptions.SenhaUsuarioException;
+import com.quesssystems.sistemacarteirasinvestimento.exceptions.SenhaUsuarioInvalidaException;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import java.util.Objects;
@@ -44,10 +44,10 @@ public class Usuario {
         int numeroMinimoCaracteres = 3;
 
         if (Objects.isNull(senha))
-            throw new SenhaUsuarioException();
+            throw new SenhaUsuarioInvalidaException();
 
         if (senha.length() < numeroMinimoCaracteres) {
-            throw new SenhaUsuarioException(numeroMinimoCaracteres);
+            throw new SenhaUsuarioInvalidaException(numeroMinimoCaracteres);
         }
     }
 }

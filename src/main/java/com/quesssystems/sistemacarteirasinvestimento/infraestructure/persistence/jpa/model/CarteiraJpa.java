@@ -1,19 +1,19 @@
 package com.quesssystems.sistemacarteirasinvestimento.infraestructure.persistence.jpa.model;
 
+import com.quesssystems.sistemacarteirasinvestimento.infraestructure.exceptions.UsuarioCarteiraJpaInvalidoException;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "carteiras")
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class CarteiraJpa {
 
     @Id
@@ -39,4 +39,18 @@ public class CarteiraJpa {
             inverseJoinColumns = @JoinColumn(name = "moeda_id")
     )
     private List<MoedaJpa> moedaList;
+
+    public CarteiraJpa(Long id, UsuarioJpa usuario, List<AcaoJpa> acaoList, List<MoedaJpa> moedaList) {
+        validarUsuario(usuario);
+
+        this.id = id;
+        this.usuario = usuario;
+        this.acaoList = acaoList;
+        this.moedaList = moedaList;
+    }
+
+    private void validarUsuario(UsuarioJpa usuario) {
+        if (Objects.isNull(usuario) || Objects.isNull(usuario.getId()))
+            throw new UsuarioCarteiraJpaInvalidoException();
+    }
 }
