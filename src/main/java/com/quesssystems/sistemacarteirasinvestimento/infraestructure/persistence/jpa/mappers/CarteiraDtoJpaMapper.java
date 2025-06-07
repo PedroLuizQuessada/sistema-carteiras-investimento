@@ -5,6 +5,8 @@ import com.quesssystems.sistemacarteirasinvestimento.infraestructure.persistence
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 @AllArgsConstructor
 public class CarteiraDtoJpaMapper {
@@ -14,14 +16,14 @@ public class CarteiraDtoJpaMapper {
     private final MoedaDtoJpaMapper moedaDtoJpaMapper;
 
     public CarteiraDto toCarteiraDto(CarteiraJpa carteiraJpa) {
-        return new CarteiraDto(String.valueOf(carteiraJpa.getId()),
+        return new CarteiraDto(Objects.isNull(carteiraJpa.getId()) ? null : String.valueOf(carteiraJpa.getId()),
                 usuarioDtoJpaMapper.toUsuarioDto(carteiraJpa.getUsuario()),
                 carteiraJpa.getAcaoList().stream().map(acaoDtoJpaMapper::toAcaoDto).toList(),
                 carteiraJpa.getMoedaList().stream().map(moedaDtoJpaMapper::toMoedaDto).toList());
     }
 
     public CarteiraJpa toCarteiraJpa(CarteiraDto carteiraDto) {
-        return new CarteiraJpa(Long.valueOf(carteiraDto.id()),
+        return new CarteiraJpa(Objects.isNull(carteiraDto.id()) ? null : Long.valueOf(carteiraDto.id()),
                 usuarioDtoJpaMapper.toUsuarioJpa(carteiraDto.usuarioDto()),
                 carteiraDto.acaoDtoList().stream().map(acaoDtoJpaMapper::toAcaoJpa).toList(),
                 carteiraDto.moedaDtoList().stream().map(moedaDtoJpaMapper::toMoedaJpa).toList());
