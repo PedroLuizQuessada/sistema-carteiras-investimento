@@ -34,6 +34,6 @@ public class CriarCarteiraUseCase {
         return carteiraGateway.criarCarteira(new CarteiraDto(null,
                 new UsuarioDto(usuario.getId(), usuario.getEmail(), usuario.getSenha()),
                 acaoList.stream().map(acao -> new AcaoDto(acao.getId(), acao.getNome(), acao.getOrigem())).toList(),
-                moedaList.stream().map(moeda -> new MoedaDto(moeda.getId(), moeda.getNome())).toList()));
+                moedaList.stream().map(moeda -> new MoedaDto(moeda.getId(), moeda.getNome(), moeda.getSimbolo())).toList()));
     }
 }

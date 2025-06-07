@@ -47,13 +47,13 @@ public class CarteiraGateway {
         return new Carteira(carteiraDto.id(),
                 new Usuario(carteiraDto.usuarioDto().id(), carteiraDto.usuarioDto().email(), carteiraDto.usuarioDto().senha()),
                 carteiraDto.acaoDtoList().stream().map(acaoDto -> new Acao(acaoDto.id(), acaoDto.nome(), acaoDto.origem())).toList(),
-                carteiraDto.moedaDtoList().stream().map(moedaDto -> new Moeda(moedaDto.id(), moedaDto.nome())).toList());
+                carteiraDto.moedaDtoList().stream().map(moedaDto -> new Moeda(moedaDto.id(), moedaDto.nome(), moedaDto.simbolo())).toList());
     }
 
     private CarteiraDto criarDto(Carteira carteira) {
         return new CarteiraDto(carteira.getId(),
                 new UsuarioDto(carteira.getUsuario().getId(), carteira.getUsuario().getEmail(), carteira.getUsuario().getSenha()),
                 carteira.getAcaoList().stream().map(acao -> new AcaoDto(acao.getId(), acao.getNome(), acao.getOrigem())).toList(),
-                carteira.getMoedaList().stream().map(moeda -> new MoedaDto(moeda.getId(), moeda.getNome())).toList());
+                carteira.getMoedaList().stream().map(moeda -> new MoedaDto(moeda.getId(), moeda.getNome(), moeda.getSimbolo())).toList());
     }
 }

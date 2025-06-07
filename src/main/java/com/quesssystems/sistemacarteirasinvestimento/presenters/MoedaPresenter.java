@@ -6,6 +6,6 @@ import com.quesssystems.sistemacarteirasinvestimento.entities.Moeda;
 public class MoedaPresenter {
 
     public static MoedaDtoResponse toResponse(Moeda moeda) {
-        return new MoedaDtoResponse(moeda.getNome());
+        return new MoedaDtoResponse(moeda.getNome(), moeda.getSimbolo());
     }
 }

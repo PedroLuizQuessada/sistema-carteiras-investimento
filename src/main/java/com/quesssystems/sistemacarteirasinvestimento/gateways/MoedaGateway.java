@@ -26,6 +26,6 @@ public class MoedaGateway {
     }
 
     private Moeda criarEntidade(MoedaDto moedaDto) {
-        return new Moeda(moedaDto.id(), moedaDto.nome());
+        return new Moeda(moedaDto.id(), moedaDto.nome(), moedaDto.simbolo());
     }
 }
