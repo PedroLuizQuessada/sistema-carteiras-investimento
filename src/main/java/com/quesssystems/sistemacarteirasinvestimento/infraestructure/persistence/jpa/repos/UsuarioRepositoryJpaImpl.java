@@ -23,14 +23,15 @@ public class UsuarioRepositoryJpaImpl implements UsuarioDataSource {
 
     @Override
     public Optional<UsuarioDto> consultarUsuarioPorId(String id) {
-        Optional<UsuarioJpa> optionalUsuarioJpa = Optional.ofNullable(entityManager.find(UsuarioJpa.class, id));
-        return optionalUsuarioJpa.map(usuarioDtoJpaMapper::toUsuarioDto);
-
+        Query query = entityManager.createQuery("SELECT usuario FROM UsuarioJpa usuario LEFT JOIN FETCH usuario.roleList WHERE usuario.id = :usuarioId");
+        query.setParameter("usuarioId", id);
+        UsuarioJpa usuarioJpa = (UsuarioJpa) query.getSingleResult();
+        return Optional.ofNullable(usuarioDtoJpaMapper.toUsuarioDto(usuarioJpa));
     }
 
     @Override
     public Optional<UsuarioDto> consultarUsuarioPorEmail(String email) {
-        Query query = entityManager.createQuery("SELECT usuario FROM UsuarioJpa usuario JOIN FETCH usuario.roleList WHERE usuario.email = :usuarioEmail");
+        Query query = entityManager.createQuery("SELECT usuario FROM UsuarioJpa usuario LEFT JOIN FETCH usuario.roleList WHERE usuario.email = :usuarioEmail");
         query.setParameter("usuarioEmail", email);
         UsuarioJpa usuarioJpa = (UsuarioJpa) query.getSingleResult();
         return Optional.ofNullable(usuarioDtoJpaMapper.toUsuarioDto(usuarioJpa));
