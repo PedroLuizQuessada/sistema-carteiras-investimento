@@ -1,7 +1,7 @@
 package com.quesssystems.sistemacarteirasinvestimento.exceptions;
 
 public class UsuarioNaoEncontradoException extends RuntimeException {
-    public UsuarioNaoEncontradoException(String id) {
-        super(String.format("Usuário de ID %s não encontrado", id));
+    public UsuarioNaoEncontradoException(String campo, String id) {
+        super(String.format("Usuário de %s %s não encontrado", campo, id));
     }
 }

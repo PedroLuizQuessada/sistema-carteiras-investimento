@@ -6,6 +6,7 @@ import com.quesssystems.sistemacarteirasinvestimento.infraestructure.persistence
 import com.quesssystems.sistemacarteirasinvestimento.infraestructure.persistence.jpa.model.UsuarioJpa;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -25,5 +26,13 @@ public class UsuarioRepositoryJpaImpl implements UsuarioDataSource {
         Optional<UsuarioJpa> optionalUsuarioJpa = Optional.ofNullable(entityManager.find(UsuarioJpa.class, id));
         return optionalUsuarioJpa.map(usuarioDtoJpaMapper::toUsuarioDto);
 
+    }
+
+    @Override
+    public Optional<UsuarioDto> consultarUsuarioPorEmail(String email) {
+        Query query = entityManager.createQuery("SELECT usuario FROM UsuarioJpa usuario JOIN FETCH usuario.roleList WHERE usuario.email = :usuarioEmail");
+        query.setParameter("usuarioEmail", email);
+        UsuarioJpa usuarioJpa = (UsuarioJpa) query.getSingleResult();
+        return Optional.ofNullable(usuarioDtoJpaMapper.toUsuarioDto(usuarioJpa));
     }
 }

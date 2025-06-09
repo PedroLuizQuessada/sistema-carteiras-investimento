@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface UsuarioDataSource {
     Optional<UsuarioDto> consultarUsuarioPorId(String id);
+    Optional<UsuarioDto> consultarUsuarioPorEmail(String email);
 }

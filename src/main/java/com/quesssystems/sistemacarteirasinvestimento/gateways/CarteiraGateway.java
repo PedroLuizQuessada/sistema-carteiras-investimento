@@ -2,10 +2,7 @@ package com.quesssystems.sistemacarteirasinvestimento.gateways;
 
 import com.quesssystems.sistemacarteirasinvestimento.datasources.CarteiraDataSource;
 import com.quesssystems.sistemacarteirasinvestimento.dtos.*;
-import com.quesssystems.sistemacarteirasinvestimento.entities.Acao;
-import com.quesssystems.sistemacarteirasinvestimento.entities.Carteira;
-import com.quesssystems.sistemacarteirasinvestimento.entities.Moeda;
-import com.quesssystems.sistemacarteirasinvestimento.entities.Usuario;
+import com.quesssystems.sistemacarteirasinvestimento.entities.*;
 import com.quesssystems.sistemacarteirasinvestimento.exceptions.CarteiraNaoEncontradaException;
 
 import java.util.List;
@@ -45,14 +42,17 @@ public class CarteiraGateway {
 
     private Carteira criarEntidade(CarteiraDto carteiraDto) {
         return new Carteira(carteiraDto.id(),
-                new Usuario(carteiraDto.usuarioDto().id(), carteiraDto.usuarioDto().email(), carteiraDto.usuarioDto().senha()),
+                new Usuario(carteiraDto.usuarioDto().id(), carteiraDto.usuarioDto().email(), carteiraDto.usuarioDto().senha(),
+                        carteiraDto.usuarioDto().roleDtoList().stream().map(roleDto -> new Role(roleDto.id(), roleDto.nome())).toList(),
+                        false),
                 carteiraDto.acaoDtoList().stream().map(acaoDto -> new Acao(acaoDto.id(), acaoDto.nome(), acaoDto.origem())).toList(),
                 carteiraDto.moedaDtoList().stream().map(moedaDto -> new Moeda(moedaDto.id(), moedaDto.nome(), moedaDto.simbolo())).toList());
     }
 
     private CarteiraDto criarDto(Carteira carteira) {
         return new CarteiraDto(carteira.getId(),
-                new UsuarioDto(carteira.getUsuario().getId(), carteira.getUsuario().getEmail(), carteira.getUsuario().getSenha()),
+                new UsuarioDto(carteira.getUsuario().getId(), carteira.getUsuario().getEmail(), carteira.getUsuario().getSenha(),
+                        carteira.getUsuario().getRoleList().stream().map(role -> new RoleDto(role.getId(), role.getNome())).toList()),
                 carteira.getAcaoList().stream().map(acao -> new AcaoDto(acao.getId(), acao.getNome(), acao.getOrigem())).toList(),
                 carteira.getMoedaList().stream().map(moeda -> new MoedaDto(moeda.getId(), moeda.getNome(), moeda.getSimbolo())).toList());
     }

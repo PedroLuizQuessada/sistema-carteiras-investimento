@@ -10,7 +10,8 @@ import org.springframework.context.annotation.Configuration;
 @SecurityScheme(
         name = "basicAuth",
         type = SecuritySchemeType.HTTP,
-        scheme = "basic"
+        scheme = "basic",
+        bearerFormat = "Basic"
 )
 @OpenAPIDefinition(
         info = @Info(title = "API sistema de carteiras de investimento", version = "v1.0.0",

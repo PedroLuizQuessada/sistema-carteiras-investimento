@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -26,13 +27,22 @@ public class UsuarioJpa {
     @Column(nullable = false, length = 255)
     private String senha;
 
-    public UsuarioJpa(Long id, String email, String senha) {
+    @ManyToMany
+    @JoinTable(
+            name = "usuario_role",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<RoleJpa> roleList;
+
+    public UsuarioJpa(Long id, String email, String senha, List<RoleJpa> roleList) {
         validarEmail(email);
         validarSenha(senha);
 
         this.id = id;
         this.email = email;
         this.senha = senha;
+        this.roleList = roleList;
     }
 
     private void validarEmail(String email) {

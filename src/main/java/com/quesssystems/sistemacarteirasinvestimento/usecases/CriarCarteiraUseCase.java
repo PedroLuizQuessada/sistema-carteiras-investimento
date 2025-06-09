@@ -32,7 +32,8 @@ public class CriarCarteiraUseCase {
         List<Acao> acaoList = criarCarteiraDto.acaoDtoList().stream().map(acaoGateway::consultarAcaoPorId).toList();
         List<Moeda> moedaList = criarCarteiraDto.moedaDtoList().stream().map(moedaGateway::consultarMoedaPorId).toList();
         return carteiraGateway.criarCarteira(new CarteiraDto(null,
-                new UsuarioDto(usuario.getId(), usuario.getEmail(), usuario.getSenha()),
+                new UsuarioDto(usuario.getId(), usuario.getEmail(), usuario.getSenha(),
+                        usuario.getRoleList().stream().map(role -> new RoleDto(role.getId(), role.getNome())).toList()),
                 acaoList.stream().map(acao -> new AcaoDto(acao.getId(), acao.getNome(), acao.getOrigem())).toList(),
                 moedaList.stream().map(moeda -> new MoedaDto(moeda.getId(), moeda.getNome(), moeda.getSimbolo())).toList()));
     }
