@@ -1,5 +1,8 @@
 package com.quesssystems.sistemacarteirasinvestimento.infraestructure.config;
 
+import com.quesssystems.sistemacarteirasinvestimento.enums.AuthorityEnum;
+import com.quesssystems.sistemacarteirasinvestimento.infraestructure.security.CustomAccessDeniedHandler;
+import com.quesssystems.sistemacarteirasinvestimento.infraestructure.security.CustomAuthenticationEntryPoint;
 import com.quesssystems.sistemacarteirasinvestimento.infraestructure.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,9 +23,14 @@ public class SecurityConfig {
             "/configuration/security", "/swagger-ui/**", "/webjars/**", "/swagger-ui.html", "/api/auth/**",
             "/api/test/**", "/authenticate"};
 
-
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+
+    @Autowired
+    private CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Bean
     BCryptPasswordEncoder passwordEncoder() {
@@ -36,7 +44,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(WHITE_LIST_URL).permitAll()
-                        .anyRequest().authenticated());
+                        .anyRequest().hasAuthority(AuthorityEnum.ADMIN.getNome()))
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(customAuthenticationEntryPoint)
+                        .accessDeniedHandler(customAccessDeniedHandler));
         return http.build();
     }
 
